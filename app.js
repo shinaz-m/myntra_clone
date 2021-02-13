@@ -1,14 +1,37 @@
-const http = require('http');
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const expressValidator = require('express-validator');
+const productRoutes = require('./routes/productRoutes');
 
-const hostname = '127.0.0.1';
-const port = 8003;
+// app
+const app = express();
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
+// db
+mongoose
+    .connect(process.env.DATABASE, {
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
+    .then(() => console.log('DB Connected'));
+
+// middlewares
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(expressValidator());
+app.use(cors());
+
+
+// routes middleware
+app.use('/api', productRoutes);
+
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+
+
