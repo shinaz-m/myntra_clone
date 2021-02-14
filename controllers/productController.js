@@ -52,4 +52,17 @@ exports.filters = (req, res) => {
         }
         res.json(genders);
     });
+
+};
+
+exports.filterByGender = (req, res) => {
+    Product.find({gender: req.body.gender})
+        .exec((err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Products not found'
+                });
+            }
+            res.json(products);
+        });
 };
