@@ -4,7 +4,8 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const expressValidator = require('express-validator');
-const productRoutes = require('./routes/productRoutes');
+require('dotenv').config();
+const productRoutes = require('./routes/product');
 
 // app
 const app = express();
