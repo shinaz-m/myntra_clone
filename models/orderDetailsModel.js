@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
 const orderDetailsSchema=new mongoose.Schema(
     {
@@ -23,31 +24,42 @@ const orderDetailsSchema=new mongoose.Schema(
             type:String,
         }],
         pageTitle:{
-            type:String,
+            type:String,default:null
         },
         storefrontId:{
-            type:String,
+            type:String,default:null
         },
         guidedNavigation:{
-            type: ObjectId,
-            ref: "GuidedNavigation",
+            name:{type:String,default:null},
+            guidedNavEntries:[{type:String}]
         },
         upsInfo:{
-            type: ObjectId,
-            ref: "UpsInfo",
+            personalizationSortAlgoUsed:{type:String,default:null},
+            numPersonalizedProductShown:{type:Number,default:0},
+            isPersonalized:{type:Boolean,default:true}
         },
         changeLog:[{
             type:String,
         }],
         appliedParams:{
-            type: ObjectId,
-            ref: "AppliedParams",
+            filters:[{
+                type:String,
+            }],
+            geoFilters:[{
+                type:String,
+            }],
+            rangeFilters:[{
+                type:String,
+            }],
+            sort:{
+                type:String
+            }
         },
         templateMessage:{
-            type:String,
+            type:String,default:null
         },
         querySubstitution:{
-            type:String,
+            type:String,default:null
         },
     },
     {timestamps:true}

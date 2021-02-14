@@ -5,15 +5,12 @@ const productSchema = new mongoose.Schema(
     {
         landingPageUrl: {
             type: String,
-            required: true,
         },
         productId: {
             type: Number,
-            required: true
         },
         productName: {
             type: String,
-            required: true
         },
         rating: {
             type: Number
@@ -26,7 +23,6 @@ const productSchema = new mongoose.Schema(
         },
         brand: {
             type: String,
-            required: true,
             maxlength: 100
         },
         searchImage: {
@@ -39,18 +35,19 @@ const productSchema = new mongoose.Schema(
             type: Number,
         },
         inventoryInfo: [{
-            type: ObjectId,
-            ref: "InventoryInfo",
-            required: true
-        }],
+            skuId: Number,
+            label:String,
+            inventory:Number,
+            availaible:Boolean
+            }
+         ],
         sizes: {
             type: String
         },
-        images: {
-            type: ObjectId,
-            ref: "Category",
-            required: true
-        },
+        images: [{
+            view:String,
+            src:String
+        }],
         gender: {
             type: String,
         },
