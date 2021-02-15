@@ -5,14 +5,14 @@ const {
     create,
     list,
     filters,
-    filterByGender,
+    listByFilter,
     listSearch
 }=require("../controllers/productController");
 
 router.post("/product/create", create);
 router.get("/products", list);
 router.get("/filters",filters)
-router.get("/products/filterByGender", filterByGender);
+router.get("/products/filterByGender",listByFilter);
 router.get("/products/search", listSearch);
 
 
