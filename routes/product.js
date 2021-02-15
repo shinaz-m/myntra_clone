@@ -12,7 +12,7 @@ const {
 router.post("/product/create", create);
 router.get("/products", list);
 router.get("/filters",filters)
-router.get("/products/filterByGender",listByFilter);
+router.get("/products/filteredResult",listByFilter);
 router.get("/products/search", listSearch);
 
 

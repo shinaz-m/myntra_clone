@@ -69,7 +69,7 @@ const productSchema = new mongoose.Schema(
         mrp: {
             type: Number,
         },
-        Price: {
+        price: {
             type: Number,
         },
         colorVariantAvailable: {
