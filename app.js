@@ -27,6 +27,9 @@ app.use(cors());
 
 // routes middleware
 app.use('/api', productRoutes);
+app.get('/', (req, res) => {
+    res.send('Welcome to myntra clone application!')
+  })
 
 const port = process.env.PORT || 8000;
 

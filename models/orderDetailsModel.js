@@ -4,10 +4,10 @@ const { ObjectId } = mongoose.Schema;
 const orderDetailsSchema=new mongoose.Schema(
     {
         totalCount:{
-            type:Number,
+            type:Number,default:-1
         },
         totalPLAShown:{
-            type:Number,
+            type:Number,default:-1
         },
         totalPLACount:{
             type:Number,

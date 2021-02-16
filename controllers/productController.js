@@ -33,8 +33,6 @@ exports.list = (req, res) => {
             }
             orderDetails.products = products;
             orderDetails.totalCount = products.length;
-            orderDetails.totalPLAShown = -1;
-            orderDetails.totalPLACount = -1;
             orderDetails.sortOptions = ["new", "price_desc", "popularity", "discount", "price_asc", "delivery_time"];
             orderDetails.storefrontId = "test12";
             res.json(orderDetails);
@@ -88,22 +86,22 @@ exports.filters = async (req, res) => {
     }]
         , (err, price) => {
             if (!err) {
-                let max=price[0].max
-                let min=price[0].min
-                let interval=(max-min)/4
-                let list=[]
-                var obj2={}
-                for (let i = min; i<=max; i=i+interval) {
-                    if (i == min)  obj2 = i + '-' + parseInt(i+interval);
-                    if (i != min)  obj2= parseInt(i + 1) + '-' + parseInt(i+interval);
-                    
-                    list.push(obj2)   
-                    }
-                obj.price=list
+                let max = price[0].max
+                let min = price[0].min
+                let interval = (max - min) / 4
+                let list = []
+                var obj2 = {}
+                for (let i = min; i <= max; i = i + interval) {
+                    if (i == min) obj2 = i + '-' + parseInt(i + interval);
+                    if (i != min) obj2 = parseInt(i + 1) + '-' + parseInt(i + interval);
+
+                    list.push(obj2)
+                }
+                obj.price = list
             }
 
         })
-        res.json(obj); 
+    res.json(obj);
 };
 
 
@@ -126,36 +124,38 @@ exports.listByFilter = (req, res) => {
                     $lte: req.body.filters[key][1]
                 };
             } else {
-                
+
                 findArgs[key] = req.body.filters[key];
             }
         }
     }
+    let orderDetails = new OrderDetails()
     Product.find(findArgs)
-    .sort([[sortBy, order]])
-    .skip(skip)
-    .limit(limit)
-    .exec((err, data) => {
-        if (err) {
-            return res.status(400).json({
-                error: 'Products not found'
-            });
-        }
-        res.json({
-            size: data.length,
-            data
+        .sort([[sortBy, order]])
+        .skip(skip)
+        .limit(limit)
+        .exec((err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Products not found'
+                });
+            }
+            orderDetails.products = data;
+            orderDetails.totalCount = data.length;
+            orderDetails.sortOptions = ["new", "price_desc", "popularity", "discount", "price_asc", "delivery_time"];
+            orderDetails.storefrontId = "test12";
+            res.json(orderDetails);
         });
-    });
 }
 
 exports.listSearch = (req, res) => {
     // create query object to hold search value 
     const query = {};
     // assign search value to query.name
-    
-    if (req.body.search) {
-        query.productName = { $regex: '^'+req.body.search, $options: 'i' };
 
+    if (req.body.search) {
+        query.productName = { $regex: '^' + req.body.search, $options: 'i' };
+        let orderDetails = new OrderDetails()
         // find the product based on query object 
         Product.find(query, (err, products) => {
             if (err) {
@@ -163,7 +163,11 @@ exports.listSearch = (req, res) => {
                     error: errorHandler(err)
                 });
             }
-            res.json(products);
+            orderDetails.products = products;
+            orderDetails.totalCount = products.length;
+            orderDetails.sortOptions = ["new", "price_desc", "popularity", "discount", "price_asc", "delivery_time"];
+            orderDetails.storefrontId = "test12";
+            res.json(orderDetails);
         })
     }
 }
